@@ -30,12 +30,6 @@ class TestingUsePython(unittest.TestCase):
         driver.find_element_by_id("submit").click()
         """ Test Error Cetak WO """
         noWo = [
-            "WO.REG1-0000001", "WO.REG1-0000002", "WO.REG1-0000003",
-            "WO.REG1-0000004", "WO.REG1-0000005", "WO.REG1-0000006",
-            "WO.REG1-0000007", "WO.REG1-0000008", "WO.REG1-0000009",
-            "WO.REG1-0000010", "WO.REG1-0000011", "WO.REG1-0000012",
-            "WO.REG1-0000013", "WO.REG1-0000014", "WO.REG1-0000015",
-            "WO.REG1-0000016", "WO.REG1-0000017", "WO.REG1-0000018",
             "WO.REG1-0000019", "WO.REG1-0000020", "WO.REG1-0000021",
             "WO.REG1-0000022", "WO.REG1-0000023", "WO.REG1-0000024",
             "WO.REG1-0000025", "WO.REG1-0000026", "WO.REG1-0000027",
@@ -369,13 +363,28 @@ class TestingUsePython(unittest.TestCase):
             baseUrl = "http://localhost/kumala/honda_sa_work_order/detail/"
             driver.get(baseUrl + x)
             driver.find_element_by_id("cetakwo").click()
+            """ Get value """
+            nama_customer1 = driver.find_element_by_id(
+                "nama_customer").get_attribute("value")
+            nama_customer = nama_customer1.split(" - ")
+            alamat_stnk = driver.find_element_by_id(
+                "alamat_stnk").get_attribute("value")
+            no_polisi = driver.find_element_by_id("no_polisi").get_attribute(
+                "value")
+            no_rangka = driver.find_element_by_id("no_rangka").get_attribute(
+                "value")
+
             driver.switch_to.window(driver.window_handles[1])
-            # time.sleep(10)
             html = driver.page_source
-            """ Mencari Error pada cetakan wo """
-            hasil = html.find("Notice")
-            if hasil != -1:
-                print(x)
+            findErroe = html.find("Notice")
+            if findErroe != -1:
+                print("error Notice {}".format(x))
+            print(x)
+            print("nama_customer: {}".format(html.find(nama_customer[0])))
+            print("alamat_stnk: {}".format(html.find(alamat_stnk)))
+            print("no_polisi: {}".format(html.find(no_polisi)))
+            print("no_rangka: {}".format(html.find(no_rangka)))
+            driver.close()
             driver.switch_to.window(driver.window_handles[0])
 
 
